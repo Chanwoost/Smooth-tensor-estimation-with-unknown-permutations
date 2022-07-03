@@ -1,4 +1,4 @@
-load("Chicago_crime_data/Chicago.RData")
+load("Chicago.RData")
 source("functions_asym.R")
 source("functions_blk.R")
 

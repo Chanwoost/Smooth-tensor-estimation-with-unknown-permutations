@@ -1,5 +1,3 @@
-Rawdata: raw datasets from the source http://frostt.io/tensors/chicago-crime/
-
 Chicago.RData: Chicago crime dataset consists of crime counts reported in the city of Chicago, ranging from January
 1st, 2001 to December 11th, 2017. The follwings are variables in the RData.
 
@@ -10,5 +8,5 @@ areas, and 32 crime types.
 * crimetype_map: labels for 32 crime types.
 
 Chicago_result.R: Code to generate the results in the main paper, which include Figure 6-7, Table 4, and Table S3.
-Chicago_data_processing: Code for data cleaning from raw data in "Rawdata/".
+Chicago_data_processing: Code for data cleaning from the source http://frostt.io/tensors/chicago-crime/
 

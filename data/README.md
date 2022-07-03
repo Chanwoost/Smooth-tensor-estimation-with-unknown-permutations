@@ -8,5 +8,5 @@ areas, and 32 crime types.
 * crimetype_map: labels for 32 crime types.
 
 Chicago_result.R: Code to generate the results in the main paper, which include Figure 6-7, Table 4, and Table S3.
-Chicago_data_processing: Code for data cleaning from the source http://frostt.io/tensors/chicago-crime/
+Chicago_data_processing.R: Code for data cleaning from the source http://frostt.io/tensors/chicago-crime/
 

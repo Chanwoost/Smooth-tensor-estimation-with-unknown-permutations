@@ -1,65 +1,4 @@
 # New smooth tensor estimation algorithms
-
-# Block Average function
-block = function(A,kvec){
-  ouput = list()
-  ftor = array(1:prod(kvec),dim = kvec)
-
-  g = list()
-  for(i in 1:length(dim(A))){
-    g[[i]] = sort(rep(1:kvec[i],ceiling(dim(A)[i]/kvec[i]))[1:dim(A)[i]])
-  }
-
-  if(length(dim(A))==2){
-
-    fmat = ftor[g[[1]],g[[2]]]
-    Avg_mat = array(aggregate(c(A),by = list(as.factor(fmat)),function(x) mean(x,na.rm = T))[,-1],dim = kvec)
-    Blk_mat = Avg_mat[g[[1]],g[[2]]]
-
-  }else if(length(dim(A))==3){
-
-    fmat = ftor[g[[1]],g[[2]],g[[3]]]
-    Avg_mat = array(aggregate(c(A),by = list(as.factor(fmat)),function(x) mean(x,na.rm = T))[,-1],dim = kvec)
-    Blk_mat = Avg_mat[g[[1]],g[[2]],g[[3]]]
-
-  }else{
-    stop("* Input array should be matrix or 3-order tensor")
-  }
-
-  return(list(Avg_mat = Avg_mat,Blk_mat= Blk_mat))
-}
-#Borda count estimation
-Borda = function(A,kvec){
-  d = dim(A)[1]
-  if(length(dim(A))==2){
-    #sorting step
-    o1 = order(sapply(1:d, function(x) sum(A[x,])))
-    As = A[o1,]
-
-    #block approximation
-    Blk = block(As,kvec)
-
-    #sorting back
-    Theta = Blk$Blk_mat[o1,]
-
-  }else if(length(dim(A))==3){
-    #sorting
-    o1 = order(sapply(1:d, function(x) sum(A[x,,])))
-    As = A[o1,,]
-
-    #block approximation
-    Blk = block(As,kvec)
-
-    #sorting back
-    Theta = Blk$Blk_mat[o1,,]
-  }else{
-    stop("* Input array should be matrix or 3-order tensor")
-  }
-  return(Theta)
-}
-
-
-
 ## fit blockwise polynomial tensor
 ## polynomial degree l; block size k;
 
@@ -90,17 +29,20 @@ polytensor=function(tensor, l, k){
 
 
 # Borda count estimation
+library(Matrix)
+
 Borda2 = function(A,l,k){
     d = dim(A)[1]
     #sorting
     o1 = order(sapply(1:d, function(x) sum(A[x,,],na.rm = T)))
-    As = A[o1,,]
-    
+    As = A[o1,o1,o1]
+
     #polynomial block approximation
     est = polytensor(As,l,k)
     
     #sorting back
-    Theta = est[o1,,]
+    invo1 = invPerm(o1)
+    Theta = est[invo1,invo1,invo1]
     
   return(Theta)
 }
@@ -202,38 +144,9 @@ HSC = function(x,k,l,r,nstart = 40,sym = F){
 
 
 
-Bal = function(A,k,max_iter = 100,threshold = 1,rep = 5){
-  n = dim(A)[1]
-  zlist = list()
-  for(r in 1:rep){
-    z = kmeans(tensor_unfold(A,1),k)$cluster
-    E = matrix(nrow = n,ncol = k)
-    xi = vector(length=k)
-    iter = 0; improvement = n
-    while((iter<=max_iter)&(improvement > threshold)){
-      iter = iter+1
-      eta = as.numeric(table(z))
-      for(i in 1:n){
-        for(a in 1:k){
-          E[i,a] = sum(A[i,which(z==a),])
-        }
-      }
-      for(a in 1:k){
-        xi[a] = eta[a]*(n-eta[a])+eta[a]*(eta[a]-1)
-      }
-      nz = apply(E%*%diag(1/xi),1,which.max);nz
-      improvement =  sum(abs(nz-z)>0);improvement
-      z = nz
-    }
-    zlist[[r]]  = ReNumber(z)
-    z = zlist[[which.max(unlist(lapply(zlist,function(x) length(unique(x)))))]]
-    iter = iter+1
-  }
-  return(z)
-}
 
 
-Bal_correct = function(A,k){
+Bal = function(A,k){
   n = dim(A)[1]
   z = kmeans(tensor_unfold(A,1),k)$cluster
   E = matrix(nrow = n,ncol = k)
@@ -255,6 +168,7 @@ Bal_correct = function(A,k){
   
   return(z)
 }
+
 
 
 
@@ -380,7 +294,6 @@ simulation = function(d, mode = 1,sigma = 0.5,signal_level=5,symnoise = T){
 
   return(list(signal= signal,observe=observe))
 }
-
 
 
 Observe_A = function(P){

@@ -23,6 +23,8 @@ one of 5 different smooth probability tensor generated from functions specified 
 
 `Table3.R`: R script for Table 3 and Table S2. The simulation outputs are in Data_Table3.zip. It uses `functions_asym.R`
 
+`revision.R`: R script for Figure R2 presented in revision`
+
 Data_Figure3.zip: Simulation ouputs from the script `Figure3.R`
 
 Data_Figure4.zip: Simulation ouputs from the script `Figure4.R`

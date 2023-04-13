@@ -19,5 +19,5 @@ Chicago crime dataset used in manuscript is available in the data folder. This f
 
 ## Manuscript
 
-The manuscript folder includes `acc_form.pdf`, `tex`, and `pdf` files to generate the manuscript submitted to JASA.
+The manuscript folder includes `acc_form.pdf`, the manuscript source files including Latex and figure files for the manuscript.
 

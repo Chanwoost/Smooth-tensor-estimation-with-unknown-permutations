@@ -2,7 +2,7 @@ Smooth tensor estimation with unknown permutations
 ================
 
 This GitHub repository contains materials to reproduce analyses, visualizations, and
-tables for reproducibility materials submitted with JASA revision based on [our reproducibility
+tables for reproducibility materials submitted with JASA revision based on [reproducibility
 guide](https://jasa-acs.github.io/repro-guide).
 
 

@@ -8,13 +8,13 @@ guide](https://jasa-acs.github.io/repro-guide).
 
 ## Code
 
-Code contains all functions and R scripts to produce figures and tables in the manuscript.
+The code folder contains all functions and R scripts to produce figures and tables in the manuscript.
 Descriptions of the functions and R scripts can be found in `code/README`.
 
 
 ## Data
 
-Chicago crime dataset used in manuscript is available. This folder contains Chicago crime data set, description of the data, and R scripts to generate the results in the manuscript.
+Chicago crime dataset used in manuscript is available in the data folder. This folder contains Chicago crime data set, description of the data, and R scripts to generate the results in the manuscript.
 
 
 ## Manuscript
